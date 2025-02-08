@@ -1,0 +1,380 @@
+.spinner-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  min-height: 100vh;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ccc; 
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.app-container::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url('./assets/forest-path.svg');
+  background-size: 300px 300px;
+  background-position: 0 0;
+  background-repeat: repeat;
+  opacity: 0.04;
+  filter: hue-rotate(240deg);
+}
+
+/* Park Grid and Cards */
+.parks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 50px;
+  padding: 20px;
+}
+
+/* Common background styling for both cards and details */
+.park-card, .park-details {
+  border: 12px solid var(--flax);
+  border-radius: 8px;
+  padding: 30px;
+  position: relative;
+  background: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.park-card::before, .park-details::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('./assets/watercolor-blue.jpg');
+  background-position: top center;
+  background-size: cover;
+  opacity: 0.4;
+  z-index: -1;
+}
+
+.park-card:nth-child(even)::before, .park-details:nth-child(even)::before {
+  background: url('./assets/watercolor-purple.jpg');
+  background-position: top center;
+  background-size: cover;
+  opacity: 0.4;
+}
+
+.park-card:hover {
+  box-shadow: 0 8px 16px var(--sandy-brown);
+  transition: transform 0.2s, box-shadow 0.2s;
+  transform: translateY(-4px);
+}
+
+.park-image, .park-detail-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border: 4px solid var(--flax);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-radius: 0px;
+  margin-bottom: 10px;
+}
+
+.park-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+/* Search */
+.search-container {
+  display: flex;
+  width: 100%;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.search-input:focus {
+  border-color: var(--primary-hover);
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
+}
+
+.clear-button {
+  margin-left: 8px;
+  padding: 12px 20px; 
+  background-color: var(--danger-color);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.7);
+  color: var(--powder); 
+  border: none; 
+  border-radius: 10px; 
+  cursor: pointer; 
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.clear-button:hover {
+  background-color: var(--danger-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.clear-button:active {
+  transform: translateY(0px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 30px;
+  padding: 20px;
+  list-style: none;
+}
+
+.page-item {
+  margin: 0 4px;
+}
+
+.page-number {
+  padding: 8px 12px;
+  border: 1px solid var(--primary-color);
+  background-color: transparent;
+  color: var(--primary-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 40px;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.pagination-button, .park-directions-button {
+  padding: 8px 16px;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--powder);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+@keyframes bump-right {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.park-directions-button {
+  margin-top: 5px;
+  align-self: self-end;
+  padding: 8px 16px;
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  color: var(--powder);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.7);
+}
+
+.park-directions-button:hover {
+  animation: bump-right 0.3s ease-in-out;
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.page-number:hover:not(.active),
+.pagination-button:hover, .park-directions-button:hover {
+  background-color: var(--primary-hover);
+  color: var(--powder);
+}
+
+.active .page-number {
+  background-color: var(--primary-color);
+  color: var(--powder);
+}
+
+.ellipsis {
+  color: var(--primary-color);
+  padding: 0 4px;
+}
+
+.disabled .pagination-button {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Park Details Page */
+.park-info {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+@keyframes bump-left {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.back-button {
+  display: inline-block;
+  padding: 8px 16px;
+  margin-bottom: 20px;
+  background-color: var(--primary-color);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  color: var(--powder);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  background-color: var(--primary-hover);
+  color: var(--powder);
+  animation: bump-left 0.3s ease-in-out;
+  transform: translateY(.5px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.park-directions-container {
+  display: flex;
+  justify-content: flex-end; 
+  margin-top: 10px;
+}
+
+.search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 10px;
+    max-width: 100%;
+  }
+
+  .parks-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .park-card, .search-container, .pagination {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .park-info, .park-details {
+    padding: 15px;
+    max-width: 100%;
+  }
+
+  .pagination {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 4px; 
+    padding: 10px;
+    overflow-x: auto;
+  }
+
+  .page-item {
+    flex: 0 1 auto;
+    min-width: 30px;
+    max-width: 50px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .page-number {
+    width: 100%;
+    padding: 4px 6px;
+    font-size: 14px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .pagination-button {
+    flex: 0 0 60px;
+    padding: 4px 6px;
+    font-size: 14px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .pagination .page-item:first-child .pagination-button {
+    margin-right: 8px;
+  }
+
+  .ellipsis {
+    padding: 0;
+    margin: 0 2px;
+  }
+
+  .back-button {
+    width: 100%;
+    text-align: center;
+  }
+}
