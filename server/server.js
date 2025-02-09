@@ -15,8 +15,16 @@ const typeDefs = `
     fullName: String!
     description: String
     states: String
+    images: [Images]
+    weatherInfo: String
+    directionsUrl: String
     activities: [Activity]
     addresses: [Address]
+  }
+
+  type Images {
+    url: String
+    altText: String
   }
 
   type Activity {
