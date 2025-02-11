@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_PARKS = gql`
-  query GetParks {
-    getParks {
+  query GetParks($offset: Int, $limit: Int) {
+    getParks(offset: $offset, limit: $limit) {
       total
       data {
         id

@@ -55,7 +55,7 @@ const typeDefs = `
     
   type Query {
     getAbout: About
-    getParks: ParksResponse
+    getParks(offset: Int, limit: Int): ParksResponse
   }
 `;
 
@@ -65,14 +65,21 @@ const resolvers = {
     getAbout: () => {
       return { message: 'National Park Service API' };
     },
-    getParks: async () => {
+    getParks: async (_, { offset = 0, limit = 9 }) => {
       try {
-        const response = await fetch('https://developer.nps.gov/api/v1/parks', {
-          headers: {
-            'X-Api-Key': apikey,
-          },
-        });
-        return await response.json();
+        const response = await fetch(
+          `https://developer.nps.gov/api/v1/parks?start=${offset}&limit=${limit}`,
+          {
+            headers: {
+              'X-Api-Key': apikey,
+            },
+          }
+        );
+        const data = await response.json();
+        return {
+          total: data.total,
+          data: data.data,
+        };
       } catch (error) {
         console.error('Error fetching parks:', error);
         throw error;
