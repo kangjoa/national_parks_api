@@ -1,3 +1,4 @@
+import typeDefs from './schema.js';
 import express from 'express';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
@@ -7,57 +8,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const apikey = process.env.VITE_API_KEY;
-
-// Create a schema
-const typeDefs = `
-  type Park {
-    id: String!
-    fullName: String!
-    description: String
-    states: String
-    images: [Images]
-    weatherInfo: String
-    directionsUrl: String
-    activities: [Activity]
-    addresses: [Address]
-  }
-
-  type Images {
-    url: String
-    altText: String
-  }
-
-  type Activity {
-    id: String!
-    name: String!
-  }
-
-  type Address {
-    line1: String
-    line2: String
-    line3: String
-    city: String
-    stateCode: String
-    countryCode: String
-    provinceTerritoryCode: String
-    postalCode: String
-    type: String
-  }
-
-  type About {
-    message: String!
-  }
-
-  type ParksResponse {
-    total: String
-    data: [Park]
-  }
-    
-  type Query {
-    getAbout: About
-    getParks(offset: Int, limit: Int): ParksResponse
-  }
-`;
 
 // Define resolvers
 const resolvers = {
