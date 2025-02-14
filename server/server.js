@@ -15,20 +15,48 @@ const resolvers = {
     getAbout: () => {
       return { message: 'National Park Service API' };
     },
-    getParks: async (_, { offset = 0, limit = 9 }) => {
+    getParks: async (_, { offset = 0, limit = 9, searchTerm = '' }) => {
       try {
+        // Fetch all parks if searching or paginated amount if not
+        const fetchLimit = searchTerm ? 500 : limit;
         const response = await fetch(
-          `https://developer.nps.gov/api/v1/parks?start=${offset}&limit=${limit}`,
+          `https://developer.nps.gov/api/v1/parks?start=${offset}&limit=${fetchLimit}`,
           {
             headers: {
               'X-Api-Key': apikey,
             },
           }
         );
+
         const data = await response.json();
+
+        // Filter parks if search term provided
+        let filteredData = data.data;
+        if (searchTerm) {
+          filteredData = data.data.filter((park) => {
+            const nameMatch = park.fullName
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase());
+            const stateMatch = park.states
+              .toLowerCase()
+              .includes(searchTerm.toLowerCase());
+            return stateMatch || (nameMatch && !stateMatch);
+          });
+
+          // Get pagination to work with searching
+          const totalFilteredResults = filteredData.length;
+          // Apply pagination
+          filteredData = filteredData.slice(offset, offset + limit);
+
+          return {
+            total: totalFilteredResults.toString(),
+            data: filteredData,
+          };
+        }
+
         return {
           total: data.total,
-          data: data.data,
+          data: filteredData,
         };
       } catch (error) {
         console.error('Error fetching parks:', error);

@@ -42,7 +42,7 @@ export const typeDefs = `
     
   type Query {
     getAbout: About
-    getParks(offset: Int, limit: Int): ParksResponse
+    getParks(offset: Int, limit: Int, searchTerm: String): ParksResponse
   }
 `;
 

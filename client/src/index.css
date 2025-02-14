@@ -15,16 +15,18 @@
   color: var(--flax);
   background-color: #242424;
 
-  --primary-color: rgb(83, 118, 106);  
+  --primary-color: rgb(83, 118, 106);
   --primary-hover: rgb(22, 93, 70);
   --danger-color: #c22343;
   --danger-hover: #bc4b51ff;
   --olivine: #8cb369ff;
   --flax: #f4e285ff;
   --sandy-brown: #f4a259ff;
-  --background-color: #F8F3E8;
+  --background-color: #f8f3e8;
   --onyx: #353839;
-  --powder: #FEFEFA;
+  --powder: #fefefa;
+  --emerald: #058743;
+  --emerald-hover: #107441;
 }
 
 body {
@@ -34,8 +36,8 @@ body {
   justify-content: center;
 }
 
-
-h1, h2 {
+h1,
+h2 {
   font-family: Playfair Display, serif;
   padding: 0;
   margin: 0;
