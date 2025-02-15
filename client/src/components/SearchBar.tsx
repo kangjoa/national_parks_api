@@ -1,15 +1,25 @@
+import { useState } from 'react';
+
 interface SearchBarProps {
-  searchTerm: string
-  onSearch: (term: string) => void
+  searchTerm: string;
+  onSearch: (term: string) => void;
 }
 
 export function SearchBar({ searchTerm, onSearch }: SearchBarProps) {
+  const [inputValue, setInputValue] = useState(searchTerm);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearch(inputValue);
+  };
+
   const handleClear = () => {
-    onSearch('')
-  }
+    setInputValue('');
+    onSearch('');
+  };
 
   return (
-    <div className="search-container">
+    <form onSubmit={handleSubmit} className="search-container">
       <label htmlFor="park-search" className="search-label">
         Search parks
       </label>
@@ -17,11 +27,16 @@ export function SearchBar({ searchTerm, onSearch }: SearchBarProps) {
         id="park-search"
         type="text"
         placeholder="Search"
-        value={searchTerm}
-        onChange={(e) => onSearch(e.target.value)}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
         className="search-input"
       />
-      <button onClick={handleClear} className="clear-button">Clear</button>
-    </div>
-  )
-} 
+      <button type="submit" className="search-button">
+        Search
+      </button>
+      <button type="button" onClick={handleClear} className="clear-button">
+        Clear
+      </button>
+    </form>
+  );
+}
