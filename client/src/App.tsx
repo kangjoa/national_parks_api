@@ -18,6 +18,8 @@ function App() {
     handlePageChange,
     handleSearch,
     searchTerm,
+    currentPage,
+    resetToFirstPage,
   } = useParks(ITEMS_PER_PAGE);
 
   // Initialize favorites from localStorage
@@ -53,7 +55,9 @@ function App() {
     <Router>
       <div className="app-container">
         <nav className="nav-bar">
-          <Link to="/">Home</Link>
+          <Link to="/" onClick={resetToFirstPage}>
+            Home
+          </Link>
           <Link to="/favorites">My Favorites</Link>
         </nav>
         <main>
@@ -75,6 +79,7 @@ function App() {
                   <ParkPagination
                     pageCount={pageCount}
                     onPageChange={handlePageChange}
+                    forcePage={currentPage}
                   />
                 </>
               }
