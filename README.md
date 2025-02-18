@@ -14,6 +14,9 @@ Install node modules:
 Start the development server:
 `npm run dev`
 
+View graphql:
+[http://localhost:4000/graphql?](http://localhost:4000/graphql?)
+
 ## Resources
 
 ### React + TypeScript + Vite

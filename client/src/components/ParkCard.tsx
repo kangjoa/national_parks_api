@@ -1,35 +1,63 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 interface ParkCardProps {
-  fullName: string
-  description: string
-  states: string
+  fullName: string;
+  description: string;
+  states: string;
   images: Array<{
-    url: string
-    altText: string
-  }>
-  weatherInfo: string
+    url: string;
+    altText: string;
+  }>;
+  weatherInfo: string;
+  id: string;
+  onToggleFavorite: (parkId: string) => void;
+  isFavorite: boolean;
 }
 
-export function ParkCard(park: ParkCardProps) {
+export function ParkCard({
+  fullName,
+  description,
+  states,
+  images,
+  weatherInfo,
+  id,
+  onToggleFavorite,
+  isFavorite,
+}: ParkCardProps) {
   return (
     <div className="park-card">
-      <Link 
-        to={`/park/${encodeURIComponent(park.fullName)}`} 
-        state={{ park }}
+      <Link
+        to={`/park/${encodeURIComponent(fullName)}`}
+        state={{
+          park: { fullName, description, states, images, weatherInfo, id },
+        }}
         className="park-link"
       >
-        <h3>{park.fullName}</h3>
-        {park.images?.[0] && (
+        <h3>{fullName}</h3>
+        {images?.[0] && (
           <img
-            src={park.images[0].url}
-            alt={park.images[0].altText}
+            src={images[0].url}
+            alt={images[0].altText}
             className="park-image"
           />
         )}
-        <p className="park-states"><strong>States:</strong> {park.states}</p>
-        <p>{park.description}</p>
+        <p className="park-states">
+          <strong>States:</strong> {states}
+        </p>
+        <p>{description}</p>
       </Link>
+      <button
+        onClick={(e) => {
+          // Prevent from navigating to park details
+          e.stopPropagation();
+          onToggleFavorite(id);
+        }}
+        className={`favorite-button ${isFavorite ? 'favorited' : ''}`}
+      >
+        {isFavorite ? '❤️' : '♡'}
+      </button>
     </div>
-  )
-} 
+  );
+}
+
+export default ParkCard;
