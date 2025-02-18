@@ -79,7 +79,15 @@ function App() {
                 </>
               }
             />
-            <Route path="/park/:parkName" element={<ParkInfo />} />
+            <Route
+              path="/park/:parkName"
+              element={
+                <ParkInfo
+                  favorites={favorites}
+                  onToggleFavorite={toggleFavorite}
+                />
+              }
+            />
             <Route
               path="/favorites"
               element={

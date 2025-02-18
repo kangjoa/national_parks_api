@@ -15,10 +15,13 @@ export interface ParksResponse {
   data: Park[];
 }
 
-export interface ParkViewProps {
-  parks: Park[];
+export interface FavoritesProps {
   favorites: string[];
   onToggleFavorite: (parkId: string) => void;
+}
+
+export interface ParkViewProps extends FavoritesProps {
+  parks: Park[];
 }
 
 export interface ParkCardProps extends Park {
