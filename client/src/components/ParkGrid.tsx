@@ -23,6 +23,7 @@ export function ParkGrid({
           states={park.states}
           images={park.images}
           weatherInfo={park.weatherInfo}
+          directionsUrl={park.directionsUrl}
           isFavorite={favorites.includes(park.id)}
           onToggleFavorite={onToggleFavorite}
         />

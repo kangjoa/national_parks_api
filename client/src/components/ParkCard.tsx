@@ -9,6 +9,7 @@ interface ParkCardProps {
     altText: string;
   }>;
   weatherInfo: string;
+  directionsUrl: string;
   id: string;
   onToggleFavorite: (parkId: string) => void;
   isFavorite: boolean;
@@ -20,6 +21,7 @@ export function ParkCard({
   states,
   images,
   weatherInfo,
+  directionsUrl,
   id,
   onToggleFavorite,
   isFavorite,
@@ -29,7 +31,15 @@ export function ParkCard({
       <Link
         to={`/park/${encodeURIComponent(fullName)}`}
         state={{
-          park: { fullName, description, states, images, weatherInfo, id },
+          park: {
+            fullName,
+            description,
+            states,
+            images,
+            weatherInfo,
+            id,
+            directionsUrl,
+          },
         }}
         className="park-link"
       >

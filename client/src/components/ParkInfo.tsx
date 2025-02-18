@@ -1,31 +1,36 @@
-import { Link, useLocation } from 'react-router-dom'
-import { Park } from '../types'
+import { Link, useLocation } from 'react-router-dom';
+import { Park } from '../types';
 
 // React Router location state
 interface LocationState {
-  park: Park
+  park: Park;
 }
 
 export function ParkInfo() {
-  const location = useLocation()
-  const state = location.state as LocationState | null
-  
+  const location = useLocation();
+  const state = location.state as LocationState | null;
+
   if (!state?.park) {
     return (
       <div className="park-info">
-        <Link to="/" className="back-button">← Back to Parks</Link>
+        <Link to="/" className="back-button">
+          ← Back to Parks
+        </Link>
         <div>Please select a park from the home page</div>
       </div>
-    )
+    );
   }
 
-  const { park } = state
+  const { park } = state;
+  console.log('directions URL:', park.directionsUrl);
 
   return (
     <div className="park-info">
-      <Link to="/" className="back-button">← Back to Parks</Link>
+      <Link to="/" className="back-button">
+        ← Back to Parks
+      </Link>
       <div className="park-details">
-      <h1>{park.fullName}</h1>
+        <h1>{park.fullName}</h1>
         {park.images?.[0] && (
           <img
             src={park.images[0].url}
@@ -33,15 +38,24 @@ export function ParkInfo() {
             className="park-detail-image"
           />
         )}
-        <p className="park-states"><strong>States:</strong> {park.states}</p>
+        <p className="park-states">
+          <strong>States:</strong> {park.states}
+        </p>
         <p className="park-description">{park.description}</p>
-        <p className="park-weather-info"><strong>Weather Info:</strong> {park.weatherInfo}</p>
+        <p className="park-weather-info">
+          <strong>Weather Info:</strong> {park.weatherInfo}
+        </p>
         <div className="park-directions-container">
-          <button className="park-directions-button" onClick={() => window.open(park.directionsUrl, '_blank')}>
+          <a
+            href={park.directionsUrl}
+            className="park-directions-button"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Directions →
-          </button>
+          </a>
         </div>
       </div>
     </div>
-  )
+  );
 }

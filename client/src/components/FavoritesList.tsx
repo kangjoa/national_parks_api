@@ -50,6 +50,7 @@ function FavoritesList({ favorites, onToggleFavorite }: FavoritesListProps) {
               states={park.states}
               images={park.images}
               weatherInfo={park.weatherInfo}
+              directionsUrl={park.directionsUrl}
               isFavorite={true}
               onToggleFavorite={onToggleFavorite}
             />
