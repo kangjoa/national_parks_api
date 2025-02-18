@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_PARKS } from '../queries/parks';
+import { GET_PARKS } from '../queries/getParks';
 
 export function useParks(itemsPerPage: number) {
   const [currentPage, setCurrentPage] = useState(0);
