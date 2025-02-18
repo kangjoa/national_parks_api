@@ -1,27 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { GET_PARKS_BY_IDS } from '../queries/getParksByIds';
 import ParkCard from './ParkCard';
+import { Park, ParkViewProps } from '../types';
 
-interface Park {
-  id: string;
-  fullName: string;
-  description: string;
-  states: string;
-  images: Array<{
-    url: string;
-    altText: string;
-  }>;
-  weatherInfo: string;
-  directionsUrl: string;
-}
-
-interface FavoritesListProps {
-  favorites: string[];
-  parks: Park[];
-  onToggleFavorite: (parkId: string) => void;
-}
-
-function FavoritesList({ favorites, onToggleFavorite }: FavoritesListProps) {
+function FavoritesList({ favorites, onToggleFavorite }: ParkViewProps) {
   const { loading, error, data } = useQuery(GET_PARKS_BY_IDS, {
     variables: { ids: favorites },
     skip: favorites.length === 0,

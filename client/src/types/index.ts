@@ -1,4 +1,5 @@
 export interface Park {
+  id: string;
   fullName: string;
   description: string;
   states: string;
@@ -8,9 +9,19 @@ export interface Park {
   }>;
   weatherInfo: string;
   directionsUrl: string;
-  id: string;
 }
 
 export interface ParksResponse {
   data: Park[];
+}
+
+export interface ParkViewProps {
+  parks: Park[];
+  favorites: string[];
+  onToggleFavorite: (parkId: string) => void;
+}
+
+export interface ParkCardProps extends Park {
+  isFavorite: boolean;
+  onToggleFavorite: (parkId: string) => void;
 }

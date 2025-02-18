@@ -22,7 +22,7 @@ export function ParkInfo() {
   }
 
   const { park } = state;
-  console.log('directions URL:', park.directionsUrl);
+  // console.log('directions URL:', park.directionsUrl);
 
   return (
     <div className="park-info">

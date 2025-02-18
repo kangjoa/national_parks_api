@@ -1,17 +1,11 @@
 import { ParkCard } from './ParkCard';
-import { Park } from '../types';
-
-interface ParkGridProps {
-  parks: Park[];
-  favorites: string[];
-  onToggleFavorite: (parkId: string) => void;
-}
+import { ParkViewProps } from '../types';
 
 export function ParkGrid({
   parks,
   favorites,
   onToggleFavorite,
-}: ParkGridProps) {
+}: ParkViewProps) {
   return (
     <div className="parks-grid">
       {parks.map((park) => (

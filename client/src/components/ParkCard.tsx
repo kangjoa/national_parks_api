@@ -1,30 +1,16 @@
 import { Link } from 'react-router-dom';
-
-interface ParkCardProps {
-  fullName: string;
-  description: string;
-  states: string;
-  images: Array<{
-    url: string;
-    altText: string;
-  }>;
-  weatherInfo: string;
-  directionsUrl: string;
-  id: string;
-  onToggleFavorite: (parkId: string) => void;
-  isFavorite: boolean;
-}
+import { ParkCardProps } from '../types';
 
 export function ParkCard({
+  id,
   fullName,
   description,
   states,
   images,
   weatherInfo,
   directionsUrl,
-  id,
-  onToggleFavorite,
   isFavorite,
+  onToggleFavorite,
 }: ParkCardProps) {
   return (
     <div className="park-card">
