@@ -3,44 +3,67 @@ import { useQuery } from '@apollo/client';
 import { GET_PARKS } from '../queries/parks';
 
 export function useParks(itemsPerPage: number) {
-  const [itemOffset, setItemOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
 
   const { loading, error, data, fetchMore } = useQuery(GET_PARKS, {
     variables: {
-      offset: itemOffset,
+      offset: 0,
       limit: itemsPerPage,
-      searchTerm: searchTerm,
+      searchTerm,
     },
   });
 
-  const handlePageChange = (selected: number) => {
-    const newOffset = selected * itemsPerPage;
-    setItemOffset(newOffset);
-    fetchMore({
+  const handlePageChange = async (selected: number) => {
+    setCurrentPage(selected);
+    const offset = selected * itemsPerPage;
+
+    await fetchMore({
       variables: {
-        offset: newOffset,
+        offset,
         limit: itemsPerPage,
-        searchTerm: searchTerm,
+        searchTerm,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return fetchMoreResult;
       },
     });
   };
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    setItemOffset(0); // Reset to first page when searching
+    setCurrentPage(0);
   };
 
-  const totalParks = data?.getParks.total || 0;
+  const resetToFirstPage = async () => {
+    setCurrentPage(0);
+    setSearchTerm('');
+    await fetchMore({
+      variables: {
+        offset: 0,
+        limit: itemsPerPage,
+        searchTerm: '',
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return fetchMoreResult;
+      },
+    });
+  };
+
+  const totalParks = parseInt(data?.getParks.total || '0');
   const pageCount = Math.ceil(totalParks / itemsPerPage);
 
   return {
     currentParks: data?.getParks.data || [],
     loading,
-    error: error?.message || '',
+    error: error?.message,
     pageCount,
     handlePageChange,
     handleSearch,
     searchTerm,
+    currentPage,
+    resetToFirstPage,
   };
 }

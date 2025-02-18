@@ -4,9 +4,14 @@ import ReactPaginate from 'react-paginate';
 interface ParkPaginationProps {
   pageCount: number;
   onPageChange: (selected: number) => void;
+  forcePage?: number;
 }
 
-export function ParkPagination({ pageCount, onPageChange }: ParkPaginationProps) {
+export function ParkPagination({
+  pageCount,
+  onPageChange,
+  forcePage,
+}: ParkPaginationProps) {
   const [isMobile, setIsMobile] = useState(false);
 
   // Adjust pagination display for mobile
@@ -43,6 +48,7 @@ export function ParkPagination({ pageCount, onPageChange }: ParkPaginationProps)
       breakClassName="page-item"
       breakLinkClassName="ellipsis"
       activeClassName="active"
+      forcePage={forcePage}
     />
   );
 }
