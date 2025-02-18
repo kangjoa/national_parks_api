@@ -39,10 +39,11 @@ export const typeDefs = `
     total: String
     data: [Park]
   }
-    
+  
   type Query {
     getAbout: About
     getParks(offset: Int, limit: Int, searchTerm: String): ParksResponse
+    getParksByIds(ids: [String!]!): ParksResponse
   }
 `;
 

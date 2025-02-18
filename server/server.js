@@ -63,6 +63,26 @@ const resolvers = {
         throw error;
       }
     },
+    getParksByIds: async (_, { ids }) => {
+      try {
+        const response = await fetch(
+          `https://developer.nps.gov/api/v1/parks?id=${ids.join(',')}`,
+          {
+            headers: {
+              'X-Api-Key': apikey,
+            },
+          }
+        );
+        const data = await response.json();
+        return {
+          total: data.data.length.toString(),
+          data: data.data,
+        };
+      } catch (error) {
+        console.error('Error fetching parks by IDs:', error);
+        throw new Error('Failed to fetch parks by IDs');
+      }
+    },
   },
 };
 
