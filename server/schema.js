@@ -7,6 +7,8 @@ export const typeDefs = `
     images: [Images]
     weatherInfo: String
     directionsUrl: String
+    activities: [Activity]
+    addresses: [Address]
   }
 
   type Images {
