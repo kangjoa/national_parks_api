@@ -17,10 +17,12 @@ Types include `Park`, `Images`, `Activity`, `Address` and `ParksResponse`
 ## Responsive and mobile-friendly
 
 Widescreen:
-![widescreen](responsive.png)
+
+<img src="responsive.png" alt="widescreen" width="400" />
 
 Mobile:
-![mobile view](mobile.png)
+
+<img src="mobile.png" alt="mobile view" width="200" />
 
 ## How to Run Locally
 
