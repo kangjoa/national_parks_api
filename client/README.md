@@ -31,4 +31,9 @@ export default defineConfig({
 
 ## Tests description
 
-The test suite in `resolvers.test.js` covers critical functionality of the GraphQL resolvers:
+The test suite in `App.test.jsx` covers critical functionality in these areas:
+
+- **Local storage**: Ensures favorites persist while using the app
+- **Routes (home and favorites)**: Verifies navigation works correctly
+
+These tests are essential for refactoring as they verify that critical behaviors remain intact when code is restructured.

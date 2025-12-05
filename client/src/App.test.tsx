@@ -1,4 +1,30 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import App from './App';
+
+// Mock the useParks hook
+vi.mock('./hooks/useParks', () => ({
+  useParks: () => ({
+    currentParks: [],
+    loading: false,
+    error: null,
+    pageCount: 0,
+    handlePageChange: vi.fn(),
+    handleSearch: vi.fn(),
+    searchTerm: '',
+    currentPage: 0,
+    resetToFirstPage: vi.fn(),
+  }),
+}));
+
+// Mock the useParksByIds
+vi.mock('./hooks/useParksByIds', () => ({
+  useParksByIds: () => ({
+    parks: [],
+    loading: false,
+    error: null,
+  }),
+}));
 
 describe('Favorites persistence', () => {
   beforeEach(() => {
@@ -16,5 +42,29 @@ describe('Favorites persistence', () => {
     const saved = localStorage.getItem('parkFavorites');
     const favorites = saved ? JSON.parse(saved) : [];
     expect(favorites).toEqual([]);
+  });
+});
+
+describe('App Routes', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('should render home route with heading', () => {
+    render(<App />);
+
+    const heading = screen.getByRole('heading', { level: 1 });
+    expect(heading.tagName).toBe('H1');
+  });
+
+  it('should render favorites route with heading', () => {
+    render(<App />);
+
+    const favoritesLinks = screen.getAllByRole('link', {
+      name: 'My Favorites',
+    });
+    fireEvent.click(favoritesLinks[0]);
+
+    expect(screen.getByText('My Favorite Parks')).toBeTruthy();
   });
 });
