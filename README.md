@@ -2,6 +2,9 @@
 
 - Project utilizes GraphQL, Node, React, Apollo, and the National [Park Service API](<(https://www.nps.gov/subjects/developer/api-documentation.htm#/)>)
 - Assignment details on [class page](https://github.com/Tech-at-DU/ACS-4330-Query-Languages/blob/master/Assignments/FinalProjectSpec.md)
+- This project was refactored as part of a [ACS 4391](https://github.com/Tech-at-DU/ACS-4931-Testing-and-Architecture) project. See [REFACTORING.md](REFACTORING.md) for details on the refactoring details. For related details about testing see:
+  - [server/README.md](server/README.md)
+  - [client/README.md](client/README.md)
 
 ## Types
 

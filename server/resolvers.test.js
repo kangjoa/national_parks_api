@@ -18,6 +18,8 @@ describe('resolvers', () => {
     ];
 
     mockFetch.mockResolvedValueOnce({
+      ok: true,
+      statusText: 'OK',
       json: async () => ({
         total: '500',
         data: mockParksData,
@@ -49,6 +51,8 @@ describe('resolvers', () => {
     ];
 
     mockFetch.mockResolvedValueOnce({
+      ok: true,
+      statusText: 'OK',
       json: async () => ({
         total: '500',
         data: mockParksData,
@@ -80,6 +84,8 @@ describe('resolvers', () => {
     ];
 
     mockFetch.mockResolvedValueOnce({
+      ok: true,
+      statusText: 'OK',
       json: async () => ({
         total: '500',
         data: mockParksData,
@@ -110,6 +116,8 @@ describe('resolvers', () => {
 
     // Test 1: First page (offset=0, limit=5)
     mockFetch.mockResolvedValueOnce({
+      ok: true,
+      statusText: 'OK',
       json: async () => ({
         total: '15',
         data: mockParksData.slice(0, 5),
@@ -127,6 +135,8 @@ describe('resolvers', () => {
 
     // Test 2: Second page (offset=5, limit=5)
     mockFetch.mockResolvedValueOnce({
+      ok: true,
+      statusText: 'OK',
       json: async () => ({
         total: '15',
         data: mockParksData.slice(5, 10),
@@ -171,6 +181,8 @@ describe('resolvers', () => {
     ];
 
     mockFetch.mockResolvedValueOnce({
+      ok: true,
+      statusText: 'OK',
       json: async () => ({
         total: '2',
         data: mockParksData,

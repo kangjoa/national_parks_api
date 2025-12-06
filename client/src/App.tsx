@@ -7,6 +7,10 @@ import { ParkInfo } from './components/ParkInfo';
 import './App.css';
 import { useState, useEffect } from 'react';
 import FavoritesList from './components/FavoritesList';
+import {
+  loadFavoritesFromStorage,
+  saveFavoritesToStorage,
+} from './utils/favoritesStorage';
 
 function App() {
   const ITEMS_PER_PAGE = 9;
@@ -24,13 +28,12 @@ function App() {
 
   // Initialize favorites from localStorage
   const [favorites, setFavorites] = useState<string[]>(() => {
-    const saved = localStorage.getItem('parkFavorites');
-    return saved ? JSON.parse(saved) : [];
+    return loadFavoritesFromStorage();
   });
 
   // Update localStorage when favorites change
   useEffect(() => {
-    localStorage.setItem('parkFavorites', JSON.stringify(favorites));
+    saveFavoritesToStorage(favorites);
   }, [favorites]);
 
   const toggleFavorite = (parkId: string) => {

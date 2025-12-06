@@ -1,8 +1,27 @@
-import dotenv from 'dotenv';
+import { npsApiClient } from './api/NPSApiClient.js';
 
-dotenv.config();
+// Filter parks if search term provided
+function filterParksBySearchTerm(parks, searchTerm) {
+  if (!searchTerm) return parks;
 
-const apikey = process.env.VITE_API_KEY;
+  const normalizedSearchTerm = searchTerm.toLowerCase();
+
+  return parks.filter((park) => {
+    const normalizedParkName = park.fullName.toLowerCase();
+    const normalizedStates = park.states.toLowerCase();
+
+    const nameMatch = normalizedParkName.includes(normalizedSearchTerm);
+    const stateMatch = normalizedStates.includes(normalizedSearchTerm);
+    const matchesSearchCriteria = stateMatch || nameMatch;
+
+    return matchesSearchCriteria;
+  });
+}
+
+// Handle pagination logic
+function paginateParks(parks, offset, limit) {
+  return parks.slice(offset, offset + limit);
+}
 
 export const resolvers = {
   Query: {
@@ -13,44 +32,20 @@ export const resolvers = {
       try {
         // Fetch all parks if searching or paginated amount if not
         const fetchLimit = searchTerm ? 500 : limit;
-        const response = await fetch(
-          `https://developer.nps.gov/api/v1/parks?start=${offset}&limit=${fetchLimit}`,
-          {
-            headers: {
-              'X-Api-Key': apikey,
-            },
-          }
-        );
 
-        const data = await response.json();
+        // Fetch parks from API using client
+        const apiData = await npsApiClient.fetchParks(offset, fetchLimit);
+        const filteredData = filterParksBySearchTerm(apiData.data, searchTerm);
+        const paginatedData = searchTerm
+          ? paginateParks(filteredData, offset, limit)
+          : filteredData;
 
-        // Filter parks if search term provided
-        let filteredData = data.data;
-        if (searchTerm) {
-          filteredData = data.data.filter((park) => {
-            const nameMatch = park.fullName
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase());
-            const stateMatch = park.states
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase());
-            return stateMatch || (nameMatch && !stateMatch);
-          });
-
-          // Get pagination to work with searching
-          const totalFilteredResults = filteredData.length;
-          // Apply pagination
-          filteredData = filteredData.slice(offset, offset + limit);
-
-          return {
-            total: totalFilteredResults.toString(),
-            data: filteredData,
-          };
-        }
-
+        const total = searchTerm
+          ? filteredData.length.toString()
+          : apiData.total;
         return {
-          total: data.total,
-          data: filteredData,
+          total,
+          data: paginatedData,
         };
       } catch (error) {
         console.error('Error fetching parks:', error);
@@ -59,22 +54,12 @@ export const resolvers = {
     },
     getParksByIds: async (_, { ids }) => {
       try {
-        const response = await fetch(
-          `https://developer.nps.gov/api/v1/parks?id=${ids.join(',')}`,
-          {
-            headers: {
-              'X-Api-Key': apikey,
-            },
-          }
-        );
-        const data = await response.json();
-        return {
-          total: data.data.length.toString(),
-          data: data.data,
-        };
+        // Fetch parks by IDs from API using client
+        const apiData = await npsApiClient.fetchParksByIds(ids);
+        return { total: apiData.data.length.toString(), data: apiData.data };
       } catch (error) {
         console.error('Error fetching parks by IDs:', error);
-        throw new Error('Failed to fetch parks by IDs');
+        throw error;
       }
     },
   },
