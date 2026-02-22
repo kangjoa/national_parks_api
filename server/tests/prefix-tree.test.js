@@ -43,6 +43,16 @@ describe('PrefixTree', () => {
     expect(trie.contains('R')).toBe(false);
   });
 
+  it('should not contain partial prefixes that are not inserted', () => {
+    const trie = new PrefixTree(['PAR', 'PAW', 'TIE']);
+
+    expect(trie.contains('PAR')).toBe(true);
+    expect(trie.contains('PA')).toBe(false);
+    expect(trie.contains('P')).toBe(false);
+    expect(trie.contains('TI')).toBe(false);
+    expect(trie.contains('AR')).toBe(false);
+  });
+
   it('should not increase size for duplicate inserts', () => {
     const trie = new PrefixTree();
 
