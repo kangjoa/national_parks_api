@@ -1,4 +1,5 @@
 import { npsApiClient } from './api/NPSApiClient.js';
+import { parkTrie } from './lib/park-trie.js';
 
 // Filter parks if search term provided
 function filterParksBySearchTerm(parks, searchTerm) {
@@ -61,6 +62,9 @@ export const resolvers = {
         console.error('Error fetching parks by IDs:', error);
         throw error;
       }
+    },
+    autocomplete: (_, { prefix }) => {
+      return parkTrie.complete(prefix.toLowerCase());
     },
   },
 };
