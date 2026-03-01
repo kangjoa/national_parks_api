@@ -88,9 +88,11 @@ async function loadParks() {
 }
 ```
 
+<img src="images/flow.jpg" alt="Flowchart showing server startup process: server startup → API call → trie data structure → GraphQL → React. The server encompasses all steps except React. The client layer includes GraphQL and React." width="600">
+
 3. Lastly, in the client, I created a corresponding `autocomplete` GraphQL query and used [Apollo\'s](https://www.apollographql.com/docs/react/api/react/useLazyQuery) `useLazyQuery` to call autocomplete as the user types in the SearchBar. Each keystroke sends the current input as a prefix and the matching park names appear in a dropdown menu below the search. Clicking on a suggestion takes a user to the selected park.
 
-<img src="images/autocomplete-searchbar.jpg" alt="Prefix tree structure" width="600">
+<img src="images/autocomplete-searchbar.jpg" alt="Autocomplete in searchbar" width="600">
 
 ## Why this is better
 
@@ -116,6 +118,10 @@ async function loadParks() {
 </table>
 
 ## What I learned
+
+1. How to port something written in Python to JavaScript with the prefix tree code
+2. How to implement autocomplete with a prefix tree
+3. How to wire a new feature into an existing GraphQL API
 
 ### References
 
