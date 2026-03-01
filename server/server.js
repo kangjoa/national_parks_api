@@ -4,6 +4,7 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import cors from 'cors';
 import { resolvers } from './resolvers.js';
+import { loadParks } from './lib/park-trie.js';
 
 // Create an express app
 const app = express();
@@ -22,6 +23,9 @@ await server.start();
 
 // Define GraphQL route
 app.use('/graphql', expressMiddleware(server));
+
+// Load parks into trie
+await loadParks();
 
 // Start this app
 const port = 4000;

@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach, vi } from 'vitest';
-import { resolvers } from './resolvers.js';
+import { resolvers } from '../resolvers.js';
 
 describe('resolvers', () => {
   beforeEach(() => {

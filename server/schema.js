@@ -46,6 +46,7 @@ export const typeDefs = `
     getAbout: About
     getParks(offset: Int, limit: Int, searchTerm: String): ParksResponse
     getParksByIds(ids: [String!]!): ParksResponse
+    autocomplete(prefix: String!): [String]
   }
 `;
 
