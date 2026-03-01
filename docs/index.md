@@ -16,22 +16,16 @@ We can retrieve words and strings from the structure by "traversing down a branc
 
 To find all parks starting with a prefix like "yo", you walk down the tree following y -> o, then collect every string in the subtree below. We don't look at parks starting with other letters, which makes a trie great for autocomplete. We can jump to the relevant branch and only visit matches instead of having to check each park.
 
-<img src="images/prefix-tree-diagram.jpg" alt="Prefix tree structure" width="300">
+<img src="images/prefix-tree-diagram.jpg" alt="Prefix tree structure" width="200">
 
 ## What I Built
 
-1. To implement autocomplete in search, I ported the prefix tree code from Python to JavaScript. This was more straightforward than I expected, mainly mapping the syntax over. For example, needed to use `this` instead of `self`, `throw new Error` instead of `raise ValueError`, and `.length` instead of `len()`. I was able to re-use the logic.
+To implement autocomplete in search, I ported the prefix tree code from Python to JavaScript. This was more straightforward than I expected, mainly mapping the syntax over. For example, needed to use `this` instead of `self`, `throw new Error` instead of `raise ValueError`, and `.length` instead of `len()`. I was able to re-use the logic.
 
 The key method is `complete(prefix)`, which returns a list of all strings starting with a given prefix.
 
-<table><thead>
-<tr>
-<th>Python</th>
-<th>JavaScript</th>
-</tr></thead>
-<tr>
-<td>
-    
+### Python
+
 ```python
 
     def complete(self, prefix) -> list[str]:
@@ -43,12 +37,13 @@ The key method is `complete(prefix)`, which returns a list of all strings starti
         def visit(node, path):
             if node.is_terminal():
                 completions.append(path)
+
         self._traverse(node, prefix, visit)
         return completions
 
-````
-</td>
-<td>
+```
+
+### JavaScript
 
 ```js
   complete(prefix) {
@@ -68,13 +63,9 @@ The key method is `complete(prefix)`, which returns a list of all strings starti
     this._traverse(node, prefix, visit);
     return completions;
   }
-````
+```
 
-</td>
-</tr>
-</table>
-
-2. On the server side, I created a module (`park-trie.js`) that fetches all park names from the NPS API once at startup and inserts them into a trie. This project already used GraphQL as a layer between the NPS API and the React frontend to simplify querying by the client. I added an `autocomplete` query to the schema and a resolver that calls `parkTrie.complete(prefix)` to return matching park names.
+On the server side, I created a module (`park-trie.js`) that fetches all park names from the NPS API once at startup and inserts them into a trie. This project already used GraphQL as a layer between the NPS API and the React frontend to simplify querying by the client. I added an `autocomplete` query to the schema and a resolver that calls `parkTrie.complete(prefix)` to return matching park names.
 
 ```park-tries.js
 const parkTrie = new PrefixTree();
@@ -90,7 +81,7 @@ async function loadParks() {
 
 <img src="images/flow.jpg" alt="Flowchart showing server startup process: server startup → API call → trie data structure → GraphQL → React. The server encompasses all steps except React. The client layer includes GraphQL and React." width="600">
 
-3. Lastly, in the client, I created a corresponding `autocomplete` GraphQL query and used [Apollo\'s](https://www.apollographql.com/docs/react/api/react/useLazyQuery) `useLazyQuery` to call autocomplete as the user types in the SearchBar. Each keystroke sends the current input as a prefix and the matching park names appear in a dropdown menu below the search. Clicking on a suggestion takes a user to the selected park.
+Lastly, in the client, I created a corresponding `autocomplete` GraphQL query and used [Apollo\'s](https://www.apollographql.com/docs/react/api/react/useLazyQuery) `useLazyQuery` to call autocomplete as the user types in the SearchBar. Each keystroke sends the current input as a prefix and the matching park names appear in a dropdown menu below the search. Clicking on a suggestion takes a user to the selected park.
 
 <img src="images/autocomplete-searchbar.jpg" alt="Autocomplete in searchbar" width="600">
 
